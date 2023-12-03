@@ -6,6 +6,13 @@
 #include "../slstatus.h"
 #include "../util.h"
 
+#define BAR_HEIGHT 22
+#define RECT_HEIGHT 12
+#define RECT_WIDTH 5
+#define OFFSET ((BAR_HEIGHT - RECT_HEIGHT) /2)
+#define BG_COLOR "#373b41"
+
+
 #if defined(__linux__)
 	#define CPU_FREQ "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"
 
@@ -49,7 +56,7 @@
 	}
 
 	const char *
-	cpu_perc_2d(const char *unused){
+	cpu_perc_2d(const char *rectColor){
 		static long double a[7];
 		long double b[7], sum;
 		float cpuPerc;
@@ -72,11 +79,12 @@
 			return NULL;
 		cpuPerc = (float)(100*((b[0] + b[1] + b[2] + b[5] + b[6])-(a[0] + a[1] + a[2] + a[5] + a[6])) / sum);
 
-		barH = (int) cpuPerc * (0.15) + 1;
+		barH = (int)(cpuPerc * (0.01 * RECT_HEIGHT)) + 1;
+		
 
-		return bprintf("%.1f%%%s^r0,%d,10,%d^^f10^", cpuPerc, unused, 16-barH, barH);
+	return bprintf("%.1f%% ^c%s^^r0,0,%d,%d^^c%s^^r0,%d,%d,%d^^f%d^", cpuPerc, BG_COLOR, RECT_WIDTH, BAR_HEIGHT, rectColor, OFFSET + RECT_HEIGHT - barH, RECT_WIDTH, barH, RECT_WIDTH);
 	}
-	cpu_perc_int(const char *unused)
+	int cpu_perc_int(const char *unused)
 	{
 		static long double a[7];
 		long double b[7], sum;	

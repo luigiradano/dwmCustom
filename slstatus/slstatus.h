@@ -13,7 +13,7 @@ const char *cat(const char *path);
 const char *cpu_freq(const char *unused);
 const char *cpu_perc(const char *unused);
 int cpu_perc_int(const char *unused);
-const char *cpu_perc_2d(const char *unused);
+const char *cpu_perc_2d(const char *rectColor);
 
 /* datetime */
 const char *datetime(const char *fmt);
