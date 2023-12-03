@@ -21,7 +21,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "MAIN", "REC", "3", "4", "", "", ""};
+static const char *tags[] = { "MAIN", "AUX", "3", "4"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -62,21 +62,10 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *firefoxCmd[]  = { "firefox", NULL };
-static const char *keyboardOn[]  = { "onboard", NULL };
-static const char *keyboardOff[]  = { "pkill", "onboard", NULL };
-static const char *xournalCmd[]  = { "xournalpp", NULL };
 
-static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
-static const char *downbright[] = { "/usr/bin/brightnessctl", "set",   "10-",  NULL };
-static const char *upbright[] = { "/usr/bin/brightnessctl", "set",   "10+",  NULL };
-
-void toggleKb(const Arg *arg);
-//void startFirefox(const Arg *arg);
-void customView(const Arg *arg);
+static const char *upvol[]   = { "/usr/bin/setVol.sh", "+5%",     NULL };
+static const char *downvol[] = { "/usr/bin/setVol.sh", "-5%",     NULL };
+static const char *mutevol[] = { "/usr/bin/pactl",     "set-sink-mute",   "0", "toggle",  NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -103,11 +92,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,	   {.v = downvol } },
-	{ 0,              XF86XK_AudioMute, 	   spawn,          {.v = mutevol } },
-	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
-	{ 0,              XF86XK_MonBrightnessUp, 	   spawn,          {.v = upbright } },
-	{ 0,              XF86XK_MonBrightnessDown, 	   spawn,          {.v = downbright } },
+//	{ MODKEY,              		Button4,   spawn,	   {.v = downvol } },
+//	{ MODKEY,              		Button5,   spawn,          {.v = mutevol } },
+//	{ MODKEY,              		XK_dot,   spawn,          {.v = upvol   } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -131,46 +118,11 @@ static const Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        customView,     {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkTagBar,		0,		Button1,	tag,		{0}},
+	{ ClkClientWin,		MODKEY,		Button5,	spawn,		{.v=downvol}},
+	{ ClkClientWin,		MODKEY,		Button4,	spawn,		{.v=upvol}},
+	{ ClkClientWin,		MODKEY,		Button3,	spawn,		{.v=mutevol}},
 };
-
-unsigned char keyboardSt = 0;
-
-void customView(const Arg *arg){
-	if((arg->ui & TAGMASK) == (1<<4)){
-		Arg *argOut = arg;
-
-		argOut->v = firefoxCmd;
-		spawn(argOut);
-	}
-	else if((arg->ui & TAGMASK) == (1<<5))
-		toggleKb(arg);
-	else if((arg->ui & TAGMASK) == (1<<6)){
-		
-		Arg *argOut = arg;
-		argOut->v = xournalCmd;
-		spawn(argOut);
-	}
-	
-	else
-		view(arg);
-
-}
-
-void toggleKb(const Arg *arg){
-	
-	Arg *argOut = arg;
-
-	keyboardSt = !keyboardSt;
-	if(keyboardSt){
-		argOut->v = keyboardOn;
-		spawn(argOut);
-	}
-	else{	
-		argOut->v = keyboardOff;
-		spawn(argOut);
-	}
-}
