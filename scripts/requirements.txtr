@@ -6,4 +6,7 @@ notofots
 SET LOCALE to IT.UTF8
 
 picom
+amdGpu, intelGpu, nvidiaGpu
+
+touchegg (portatile)
  
