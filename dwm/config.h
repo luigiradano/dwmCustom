@@ -67,13 +67,18 @@ static const char *keyboardOn[]  = { "onboard", NULL };
 static const char *keyboardOff[]  = { "pkill", "onboard", NULL };
 static const char *xournalCmd[]  = { "xournalpp", NULL };
 
-static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
+//static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
+//static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *upvol[] 	= { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
+static const char *muteMic[] = { "/usr/bin/pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
 static const char *downbright[] = { "/usr/bin/brightnessctl", "set",   "10-",  NULL };
 static const char *upbright[] = { "/usr/bin/brightnessctl", "set",   "10+",  NULL };
-
+static const char *playPause[] = {"/usr/bin/playerctl", "-a", "play-pause", NULL};
+static const char *nextSong[] = {"/usr/bin/playerctl", "-a", "next", NULL};
+static const char *prevSong[] = {"/usr/bin/playerctl", "-a", "previous", NULL};
+static const char *pavuControl[] = {"/usr/bin/pavucontrol", NULL};
 void toggleKb(const Arg *arg);
 //void startFirefox(const Arg *arg);
 void customView(const Arg *arg);
