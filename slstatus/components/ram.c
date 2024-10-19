@@ -32,7 +32,7 @@
 		           "MemFree: %ju kB\n"
 		           "MemAvailable: %ju kB\n",
 		           &free, &free, &free) != 3)
-			return NULL;
+			return 0;
 
 		return (free * 1024);
 		
@@ -84,7 +84,7 @@
 		           "Buffers: %ju kB\n"
 		           "Cached: %ju kB\n",
 		           &total, &free, &buffers, &buffers, &cached) != 5)
-			return NULL;
+			return (char*) NULL;
 
 		used = (total - free - buffers - cached);
 		return fmt_human(used * 1024, 1024);
@@ -101,7 +101,7 @@
 		           "Buffers: %ju kB\n"
 		           "Cached: %ju kB\n",
 		           &total, &free, &buffers, &buffers, &cached) != 5)
-			return NULL;
+			return 0;
 
 		used = (total - free - buffers - cached);
 		return (used * 1024);

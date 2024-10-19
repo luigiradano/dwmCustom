@@ -67,10 +67,10 @@ static const struct arg args[] = {
 	/* function format          argument */
 //	{ battery_perc, 	"[^c#0F0F0^^c#000000^ %s, ", 		"BAT0"	},
 //	{ battery_state,	"%s ]",			"BAT0"	},
-	{ battery_widget,	"^b#373b41^^c#c5c8c6^[%s^c#c5c8c6^]",			"BAT0"	},
-	{ run_command,		"[^b#373b41^^c#f0c674^ ^c#c5c8c6^ %s]",		"getVol.sh"},
-	{ ram_used, 		"[^b#373b41^^c#8c9440^ ^c#c5c8c6^ %s]",		""	},
-	{ cpu_perc_2d, 		"[^b#373b41^^c#a54242^ ^c#c5c8c6^ %s^c#c5c8c6^]",		"^c#373b41^^r0,0,12,21^^c#a54242^"	},
+	{ battery_widget,	"^b#372021^^c#c5c8c6^[%s^c#c5c8c6^]",			"BAT0"	},
+	{ run_command,		"[^b#372021^^c#f0c674^ ^c#c5c8c6^ %s]",		"getVol.sh"},
+	{ ram_used, 		"[^b#372021^^c#8c9440^ ^c#c5c8c6^ %s]",		""	},
+	{ cpu_perc_2d, 		"[^b#372021^^c#a20212^ ^c#c5c8c6^ %s^c#c5c8c6^]",		"^c#372021^^r0,0,12,21^^c#a54242^"	},
 	{ run_command,		"[^c#5f819d^ ^c#c5c8c6^ %s]",		"getTemp.sh"},
 	{ datetime, 		"[ %s]",           	"%F %R" },
 };

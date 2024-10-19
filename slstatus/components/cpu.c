@@ -76,7 +76,8 @@
 
 		return bprintf("%.1f%%%s^r0,%d,10,%d^^f10^", cpuPerc, unused, 16-barH, barH);
 	}
-	cpu_perc_int(const char *unused)
+	
+	int cpu_perc_int(const char *unused)
 	{
 		static long double a[7];
 		long double b[7], sum;	

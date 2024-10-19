@@ -9,11 +9,11 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const unsigned int gappx     = 8;        /* gap pixel between windows */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#6eaeab";
-static const char col_gray2[]       = "#e093e0";
-static const char col_gray3[]       = "#000000";
-static const char col_gray4[]       = "#17191c";
-static const char col_cyan[]        = "#84a5d5";
+static const char col_gray4[]       = "#e9d5d3";
+static const char col_gray3[]       = "#c9221e";
+static const char col_gray2[]       = "#372021";
+static const char col_gray1[]       = "#b2acb5";
+static const char col_cyan[]        = "#9e2224";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -113,6 +113,10 @@ static const Key keys[] = {
 	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
 	{ 0,              XF86XK_MonBrightnessUp, 	   spawn,          {.v = upbright } },
 	{ 0,              XF86XK_MonBrightnessDown, 	   spawn,          {.v = downbright } },
+	{ 0,			  XF86XK_AudioPlay,	spawn,	{.v = playPause } },
+	{ 0,			  XF86XK_AudioPrev, spawn,	{.v = prevSong	} },
+	{ 0,			  XF86XK_AudioNext,	spawn,	{.v = nextSong	} },
+	{ 0,			  XF86XK_AudioMicMute,	spawn,	{.v = muteMic	} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
