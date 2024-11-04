@@ -30,7 +30,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Onboard",  NULL, 	  NULL,       1 << 8,	    1, 		 -1 },
+	{ "Onboard",  NULL, 	    NULL,       1 << 8,	      1, 		       -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -66,6 +66,7 @@ static const char *firefoxCmd[]  = { "firefox", NULL };
 static const char *keyboardOn[]  = { "onboard", NULL };
 static const char *keyboardOff[]  = { "pkill", "onboard", NULL };
 static const char *xournalCmd[]  = { "xournalpp", NULL };
+static const char *nautilusCmd[]  = { "nautilus", NULL };
 
 //static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
 //static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
@@ -78,7 +79,7 @@ static const char *upbright[] = { "/usr/bin/brightnessctl", "set",   "10+",  NUL
 static const char *playPause[] = {"/usr/bin/playerctl", "-a", "play-pause", NULL};
 static const char *nextSong[] = {"/usr/bin/playerctl", "-a", "next", NULL};
 static const char *prevSong[] = {"/usr/bin/playerctl", "-a", "previous", NULL};
-static const char *pavuControl[] = {"/usr/bin/pavucontrol", NULL};
+static const char *screenshot[] = {"/usr/bin/screenshot.sh", NULL};
 void toggleKb(const Arg *arg);
 //void startFirefox(const Arg *arg);
 void customView(const Arg *arg);
@@ -106,13 +107,14 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshot } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,              XF86XK_AudioLowerVolume, spawn,	   {.v = downvol } },
-	{ 0,              XF86XK_AudioMute, 	   spawn,          {.v = mutevol } },
+	{ 0,              XF86XK_AudioLowerVolume, spawn,	         {.v = downvol } },
+	{ 0,              XF86XK_AudioMute, 	   spawn,            {.v = mutevol } },
 	{ 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol   } },
-	{ 0,              XF86XK_MonBrightnessUp, 	   spawn,          {.v = upbright } },
-	{ 0,              XF86XK_MonBrightnessDown, 	   spawn,          {.v = downbright } },
+	{ 0,              XF86XK_MonBrightnessUp, 	   spawn,      {.v = upbright } },
+	{ 0,              XF86XK_MonBrightnessDown, 	   spawn,    {.v = downbright } },
 	{ 0,			  XF86XK_AudioPlay,	spawn,	{.v = playPause } },
 	{ 0,			  XF86XK_AudioPrev, spawn,	{.v = prevSong	} },
 	{ 0,			  XF86XK_AudioNext,	spawn,	{.v = nextSong	} },
@@ -163,7 +165,11 @@ void customView(const Arg *arg){
 		argOut->v = xournalCmd;
 		spawn(argOut);
 	}
-	
+  else if((arg->ui & TAGMASK == (1<<7))){
+    Arg *argOut = arg;
+    argOut->v = nautilusCmd;
+    spawn(argOut);
+  }
 	else
 		view(arg);
 

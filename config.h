@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+
 /*
  * appearance
  *
@@ -6,6 +7,7 @@
  */
 static char *font = "Liberation Mono:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
+float alpha = 0.5;
 /*
  * What program is execed by st depends of these precedence rules:
  * 1: program passed with -e
@@ -91,9 +93,6 @@ char *termname = "screen-256color";
  */
 unsigned int tabspaces = 8;
 
-/*bg opacity*/
-unsigned int alpha = 0xfcc;
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 
@@ -172,8 +171,17 @@ static uint forcemousemod = ShiftMask;
  */
 static MouseShortcut mshortcuts[] = {
     /* mask                 button   function        argument       release */
-    {XK_NO_MOD, Button4, kscrollup, {.i = 1}},
-    {XK_NO_MOD, Button5, kscrolldown, {.i = 1}},
+    {XK_ANY_MOD, Button2, selpaste, {.i = 0}, 1},
+    {ShiftMask, Button4, ttysend, {.s = "\033[5;2~"}},
+    {XK_ANY_MOD, Button4, ttysend, {.s = "\031"}},
+    {ShiftMask, Button5, ttysend, {.s = "\033[6;2~"}},
+    {XK_ANY_MOD, Button5, ttysend, {.s = "\005"}},
+};
+
+MouseKey mkeys[] = {
+    /* button               mask            function        argument */
+    {Button4, XK_NO_MOD, kscrollup, {.i = 1}},
+    {Button5, XK_NO_MOD, kscrolldown, {.i = 1}},
 };
 
 /* Internal keyboard shortcuts. */
