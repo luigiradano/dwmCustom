@@ -21,7 +21,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "MAIN", "REC", "3", "4", "", "", ""};
+static const char *tags[] = { "MAIN", "REC", "3", "4", ""};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -30,7 +30,6 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Onboard",  NULL, 	    NULL,       1 << 8,	      1, 		       -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
@@ -155,14 +154,6 @@ void customView(const Arg *arg){
 		Arg *argOut = arg;
 
 		argOut->v = firefoxCmd;
-		spawn(argOut);
-	}
-	else if((arg->ui & TAGMASK) == (1<<5))
-		toggleKb(arg);
-	else if((arg->ui & TAGMASK) == (1<<6)){
-		
-		Arg *argOut = arg;
-		argOut->v = xournalCmd;
 		spawn(argOut);
 	}
   else if((arg->ui & TAGMASK == (1<<7))){

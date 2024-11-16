@@ -1,3 +1,5 @@
+pulseaudio
+pulseaduio-alsa
 pavucontrol
 ttf-font-awesome
 feh
