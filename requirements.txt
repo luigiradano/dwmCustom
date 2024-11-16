@@ -1,0 +1,7 @@
+pavucontrol
+ttf-font-awesome
+feh
+nautilus
+lm_sensors
+redshift
+picom
