@@ -65,8 +65,12 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ ipv4,		"^c#c5c8c6^^b#372021^[^c#f0c674^ ^c#c5c8c6^ %s]",		"wlp5s0"},
-//	{ battery_state,	"%s ]",			"BAT0"	},
+	{ netspeed_tx,		"^c#c5c8c6^^b#372021^[^c#e46ce2^^c#c5c8c6^ %s",		"wlp5s0"},
+	{ netspeed_rx,		" ^c#c5c8c6^^b#372021^^c#00fffa^^c#c5c8c6^ %s]",		"wlp5s0"},
+	{ disk_used,		"^c#c5c8c6^^b#372021^[^c#f0c674^^c#c5c8c6^ %s]",		"/"},
+	//{ ipv4,		"^c#c5c8c6^^b#372021^[^c#f0c674^ ^c#c5c8c6^ %s]",		"wlp5s0"},
+  //{ battery_state,	"%s ]",			"BAT0"	},
+
 	{ run_command,		"[^b#372021^^c#f0c674^ ^c#c5c8c6^ %s]",		"getVol.sh"},
 	{ ram_used, 		"[^b#372021^^c#8c9440^ ^c#c5c8c6^ %s]",		""	},
 	{ cpu_perc_2d, 		"[^b#372021^^c#a20212^ ^c#c5c8c6^ %s^c#c5c8c6^]",		"^c#372021^^r0,0,12,21^^c#a54242^"	},

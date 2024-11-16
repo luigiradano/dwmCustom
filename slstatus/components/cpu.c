@@ -74,7 +74,7 @@
 
 		barH = (int) cpuPerc * (0.15) + 1;
 
-		return bprintf("%.1f%%%s^r0,%d,10,%d^^f10^", cpuPerc, unused, 16-barH, barH);
+		return bprintf("%2.1f%%%s^r0,%d,10,%d^^f10^", cpuPerc, unused, 16-barH, barH);
 	}
 	
 	int cpu_perc_int(const char *unused)

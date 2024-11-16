@@ -1,4 +1,5 @@
 pulseaudio
+playerctl
 pulseaduio-alsa
 pavucontrol
 ttf-font-awesome
