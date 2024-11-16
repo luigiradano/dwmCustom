@@ -92,7 +92,7 @@ char *termname = "screen-256color";
 unsigned int tabspaces = 8;
 
 /*bg opacity*/
-unsigned int alpha = 0xfcc;
+unsigned int alpha = 0xfc0;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -101,7 +101,7 @@ static const char *colorname[] = {
     [0] = "#282a2e", /* black   */
     [1] = "#c9221e", /* red     */
     [2] = "#adf182", /* green   */
-    [3] = "#ff8c28", /* yellow  */
+    [3] = "#fa8622", /* yellow  */
     [4] = "#9590bd", /* blue    */
     [5] = "#523874", /* magenta */
     [6] = "#5e8d87", /* cyan    */
