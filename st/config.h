@@ -101,7 +101,7 @@ static const char *colorname[] = {
     [0] = "#282a2e", /* black   */
     [1] = "#c9221e", /* red     */
     [2] = "#adf182", /* green   */
-    [3] = "#fa8622", /* yellow  */
+    [3] = "#fa8628", /* yellow  */
     [4] = "#9590bd", /* blue    */
     [5] = "#523874", /* magenta */
     [6] = "#5e8d87", /* cyan    */
@@ -174,6 +174,8 @@ static MouseShortcut mshortcuts[] = {
     /* mask                 button   function        argument       release */
     {XK_NO_MOD, Button4, kscrollup, {.i = 1}},
     {XK_NO_MOD, Button5, kscrolldown, {.i = 1}},
+    {XK_ANY_MOD, Button3, clippaste, {.i = 0}, 1},
+    {XK_ANY_MOD, Button2, clipcopy, {.i = 0}, 1},
 };
 
 /* Internal keyboard shortcuts. */
