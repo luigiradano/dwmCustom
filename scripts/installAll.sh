@@ -14,7 +14,7 @@ cp ../backgrounds/bg.jpg /home/luigi/.bg.jpg
 
 echo "Installing required packages"
 
-sudo pacman -S picom redshift touchegg feh lm_sensors onboard
+sudo pacman -S picom redshift touchegg feh lm_sensors onboard xf86-input-synaptics
 
 echo "Installing yay"
 git clone https://aur.archlinux.org/yay.git
@@ -22,7 +22,7 @@ cd yay
 makepkg -si
 
 echo "Installing AUR software"
-yay -S dropbox touche
+yay -S dropbox touche nerd-fonts
 
 echo "Setting up xinitrc"
 
@@ -42,10 +42,10 @@ sensors-detect --auto
 
 echo "Configuring touchpad"
 sudo mkdir -p /etc/X11/xorg.conf.d/
-./trackPadCfg.sh
+. trackPadCfg.sh
 
 echo "Installing LazyVim"
-./lazyVimInstall.sh
+. lazyVimInstall.sh
 
 
 
