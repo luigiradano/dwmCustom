@@ -11,14 +11,14 @@ add_luigi_user() {
       return 1
     fi
     echo "User 'luigi' added successfully."
+    echo "Adding password to user luigi"
+    sudo passwd luigi
+    sudo usermod -aG wheel luigi
+    sudo usermod -aG sudo luigi
+    mkdir /home/luigi
   fi
   return 0
 }
 
 # Example usage:
 add_luigi_user
-echo "Adding password to user luigi"
-sudo passwd luigi
-sudo usermod -aG wheel luigi
-sudo usermod -aG sudo luigi
-mkdir /home/luigi

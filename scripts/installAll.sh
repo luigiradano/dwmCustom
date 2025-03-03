@@ -22,7 +22,7 @@ cd yay
 makepkg -si
 
 echo "Installing AUR software"
-yay -S dropbox touche --no-confirm
+yay -S dropbox touche
 
 echo "Setting up xinitrc"
 
