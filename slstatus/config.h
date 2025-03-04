@@ -67,7 +67,7 @@ static const struct arg args[] = {
 	/* function format          argument */
 	{ netspeed_tx,		"^c#c5c8c6^^b#372021^[^c#e46ce2^^c#c5c8c6^ %s",		"wlp5s0"},
 	{ netspeed_rx,		" ^c#c5c8c6^^b#372021^^c#00fffa^^c#c5c8c6^ %s]",		"wlp5s0"},
-	{ disk_used,		"^c#c5c8c6^^b#372021^[^c#f0c674^^c#c5c8c6^ %s]",		"/"},
+	{ disk_used,		"^c#c5c8c6^^b#372021^[^c#063970^^c#c5c8c6^ %s]",		"/"},
 	//{ ipv4,		"^c#c5c8c6^^b#372021^[^c#f0c674^ ^c#c5c8c6^ %s]",		"wlp5s0"},
   //{ battery_state,	"%s ]",			"BAT0"	},
 
