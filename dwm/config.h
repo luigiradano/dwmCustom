@@ -85,6 +85,7 @@ static const char *nextSong[] = {"/usr/bin/playerctl", "-a", "next", NULL};
 static const char *prevSong[] = {"/usr/bin/playerctl", "-a", "previous", NULL};
 static const char *screenshot[] = {"/usr/bin/screenshot.sh", NULL};
 static const char *extendMonitor[] = {"/usr/bin/extendMonitor.sh", NULL};
+static const char *suspendCmd[] = {"/usr/bin/systemctl", "suspend"};
 void toggleKb(const Arg *arg);
 // void startFirefox(const Arg *arg);
 void customView(const Arg *arg);
@@ -117,6 +118,7 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_f, spawn, {.v = firefoxCmd}},
+    {MODKEY | ShiftMask, XK_l, spawn, {.v = suspendCmd}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
     {0, XF86XK_AudioMute, spawn, {.v = mutevol}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
