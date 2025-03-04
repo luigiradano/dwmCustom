@@ -1,1 +1,1 @@
-sensors | grep T | awk {'print $2'}
+sensors | grep temp1 | awk {'print $2'}

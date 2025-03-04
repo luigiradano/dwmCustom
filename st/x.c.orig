@@ -54,6 +54,10 @@ typedef struct {
 #define OPAQUE 0Xff
 #define USE_ARGB (alpha != OPAQUE && opt_embed == NULL)
 
+/* alpha */
+#define OPAQUE 0Xff
+#define USE_ARGB (alpha != OPAQUE && opt_embed == NULL)
+
 /* function definitions used in config.h */
 static void clipcopy(const Arg *);
 static void clippaste(const Arg *);

@@ -1,5 +1,7 @@
---- x.c
-+++ x.c
+diff --git a/x.c b/x.c
+index 00cb6b1..8f87c0f 100644
+--- a/x.c
++++ b/x.c
 @@ -78,6 +78,7 @@ typedef XftGlyphFontSpec GlyphFontSpec;
  typedef struct {
  	int tw, th; /* tty width and height */

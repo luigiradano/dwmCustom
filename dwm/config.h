@@ -67,7 +67,7 @@ static const char *dmenucmd[] = {"dmenu_run", "-m", dmenumon, "-fn", dmenufont, 
 static const char *termcmd[] = {"st", NULL};
 static const char *firefoxCmd[] = {"firefox", NULL};
 static const char *keyboardOn[] = {"onboard", NULL};
-static const char *keyboardOff[] = {"pkill", "onboard", NULL};
+static const char *keyboardOff[] = {"", "", NULL};
 static const char *xournalCmd[] = {"xournalpp", NULL};
 static const char *nautilusCmd[] = {"nautilus", NULL};
 
@@ -77,7 +77,7 @@ static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_S
 static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *mutevol[] = {"/usr/bin/pactl", "set-sink-mute", "0", "toggle", NULL};
 // static const char *muteMic[] = {"/usr/bin/pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
-static const char *muteMic[] = {"/usr/bin/toggleMute.sh", NULL};
+static const char *muteMic[] = {"/usr/bin/toggleMicMute.sh", NULL};
 static const char *downbright[] = {"/usr/bin/brightnessctl", "set", "10-", NULL};
 static const char *upbright[] = {"/usr/bin/brightnessctl", "set", "10+", NULL};
 static const char *playPause[] = {"/usr/bin/playerctl", "-a", "play-pause", NULL};
@@ -134,7 +134,7 @@ static const Key keys[] = {
                         TAGKEYS(XK_6, 5)
                             TAGKEYS(XK_7, 6)
                                 TAGKEYS(XK_8, 7)
-                                    TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
+                                    TAGKEYS(XK_9, 8){MODKEY | ControlMask | ShiftMask, XK_q, quit, {0}},
 };
 
 /* button definitions */
@@ -162,8 +162,12 @@ void customView(const Arg *arg) {
 
     argOut->v = firefoxCmd;
     spawn(argOut);
-  } else if ((arg->ui & TAGMASK) == (1 << 5))
-    toggleKb(arg);
+  } else if ((arg->ui & TAGMASK) == (1 << 5)){
+    Arg *argOut = arg;
+    argOut->v = keyboardOn;
+    spawn(argOut);
+	}	
+//    toggleKb(arg);
   else if ((arg->ui & TAGMASK) == (1 << 6)) {
     Arg *argOut = arg;
     argOut->v = xournalCmd;
@@ -179,12 +183,12 @@ void customView(const Arg *arg) {
 void toggleKb(const Arg *arg) {
   Arg *argOut = arg;
 
-  keyboardSt = !keyboardSt;
-  if (keyboardSt) {
-    argOut->v = keyboardOn;
+//  keyboardSt = !keyboardSt;
+//  if (keyboardSt) {
+//    argOut->v = keyboardOn;
     spawn(argOut);
-  } else {
-    argOut->v = keyboardOff;
-    spawn(argOut);
-  }
+//  } else {
+//    argOut->v = keyboardOff;
+//    spawn(argOut);
+//  }
 }
