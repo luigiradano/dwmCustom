@@ -85,7 +85,7 @@ static const char *nextSong[] = {"/usr/bin/playerctl", "-a", "next", NULL};
 static const char *prevSong[] = {"/usr/bin/playerctl", "-a", "previous", NULL};
 static const char *screenshot[] = {"/usr/bin/screenshot.sh", NULL};
 static const char *extendMonitor[] = {"/usr/bin/extendMonitor.sh", NULL};
-static const char *suspendCmd[] = {"/usr/bin/systemctl", "suspend"};
+static const char *suspendCmd[] = {"/usr/bin/systemctl", "suspend", NULL};
 void toggleKb(const Arg *arg);
 // void startFirefox(const Arg *arg);
 void customView(const Arg *arg);
