@@ -28,3 +28,5 @@ install_lazyvim() {
 
 # Example usage (you can call this function from your script or terminal)
 install_lazyvim
+echo "Copying config"
+cp ../configs/* /home/luigi/.config/nvim/ -r
