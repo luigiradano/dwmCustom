@@ -69,6 +69,7 @@ static const char *keyboardOn[] = {"onboard", NULL};
 static const char *keyboardOff[] = {"pkill", "onboard", NULL};
 static const char *xournalCmd[] = {"xournalpp", NULL};
 static const char *nautilusCmd[] = {"nautilus", NULL};
+static const char *xrandrCmd[] = {"xrandr", "--auto", NULL};
 
 // static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
 // static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
@@ -123,6 +124,9 @@ static const Key keys[] = {
     {MODKEY, XK_Left, spawn, {.v = prevSong}},
     {MODKEY, XK_Right, spawn, {.v = nextSong}},
     {MODKEY | ShiftMask, XK_f, spawn, {.v = firefoxCmd}},
+    {MODKEY | ShiftMask, XK_d, spawn, {.v = nautilusCmd}},
+    {MODKEY | ShiftMask, XK_p, spawn, {.v = xrandrCmd}},
+
     //	{ 0,			                      XF86XK_AudioMicMute,	spawn,	{.v = muteMic	} },
     TAGKEYS(XK_1, 0)
         TAGKEYS(XK_2, 1)
