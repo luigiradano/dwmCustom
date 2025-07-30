@@ -4,6 +4,12 @@ echo "Installing Oh My Bash"
 echo "Copying slstatus scripts"
 sudo cp ./data/getVol.sh /usr/bin/getVol.sh
 sudo cp ./data/getTemp.sh /usr/bin/getTemp.sh
+sudo chmod +x /usr/bin/getTemp.sh
+sudo chmod +x /usr/bin/getVol.sh
+
+echo "Copying screen script"
+sudo cp ./data/extendMonitor.sh /usr/bin/extendMonitor.sh
+sudo chmod +x /usr/bin/extendMonitor.sh
 
 echo "Generating user"
 ./addUser.sh
@@ -13,7 +19,7 @@ cp ../backgrounds/bg.jpg /home/luigi/.bg.jpg
 
 echo "Installing required packages"
 
-sudo pacman -S picom redshift touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox
+sudo pacman -S picom redshift touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox ly
 
 echo "Installing yay"
 git clone https://aur.archlinux.org/yay.git
