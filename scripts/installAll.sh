@@ -9,6 +9,7 @@ sudo chmod +x /usr/bin/getVol.sh
 
 echo "Copying screen script"
 sudo cp ./data/extendMonitor.sh /usr/bin/extendMonitor.sh
+sudo cp ./data/rotateScreen.sh /usr/bin/rotateScreen.sh
 sudo chmod +x /usr/bin/extendMonitor.sh
 
 echo "Generating user"

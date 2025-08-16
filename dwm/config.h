@@ -74,12 +74,12 @@ static const char *nautilusCmd[] = {"nautilus", NULL};
 // static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
 // static const char *downvol[] = { "/usr/bin/setVolume.sh", "-5%",     NULL };
 static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
-static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
+static const char *upvol[] = {"/sr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *mutevol[] = {"/usr/bin/pactl", "set-sink-mute", "0", "toggle", NULL};
 // static const char *muteMic[] = {"/usr/bin/pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
 static const char *muteMic[] = {"/usr/bin/toggleMicMute.sh", NULL};
-static const char *downbright[] = {"/usr/bin/brightnessctl", "set", "10-", NULL};
-static const char *upbright[] = {"/usr/bin/brightnessctl", "set", "10+", NULL};
+static const char *downbright[] = {"/usr/bin/brightnessctl", "s", "10%-", NULL};
+static const char *upbright[] = {"/usr/bin/brightnessctl", "s", "10%+", NULL};
 static const char *playPause[] = {"/usr/bin/playerctl", "-a", "play-pause", NULL};
 static const char *nextSong[] = {"/usr/bin/playerctl", "-a", "next", NULL};
 static const char *prevSong[] = {"/usr/bin/playerctl", "-a", "previous", NULL};
@@ -88,6 +88,7 @@ static const char *extendMonitor[] = {"/usr/bin/extendMonitor.sh", NULL};
 static const char *suspendCmd[] = {"/usr/bin/systemctl", "suspend", NULL};
 void toggleKb(const Arg *arg);
 // void startFirefox(const Arg *arg);
+void rotateScreen(const Arg *arg);
 void customView(const Arg *arg);
 
 static const Key keys[] = {
@@ -95,6 +96,7 @@ static const Key keys[] = {
     {MODKEY, XK_Return, spawn, {.v = dmenucmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_b, togglebar, {0}},
+    {MODKEY, XK_r, rotateScreen, {.v = termcmd}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}},
@@ -125,6 +127,7 @@ static const Key keys[] = {
     {0, XF86XK_MonBrightnessUp, spawn, {.v = upbright}},
     {0, XF86XK_MonBrightnessDown, spawn, {.v = downbright}},
     {0, XF86XK_AudioPlay, spawn, {.v = playPause}},
+    {MODKEY, XK_space, spawn, {.v = playPause}},
     {0, XF86XK_AudioPrev, spawn, {.v = prevSong}},
     {0, XF86XK_AudioNext, spawn, {.v = nextSong}},
     {0, XF86XK_AudioMicMute, spawn, {.v = muteMic}},
@@ -180,6 +183,21 @@ void customView(const Arg *arg) {
     spawn(argOut);
   } else
     view(arg);
+}
+
+unsigned int dispOrientation = 0;
+
+void rotateScreen(const Arg *arg){
+  if(dispOrientation < 3)
+    dispOrientation ++;
+  else
+    dispOrientation = 0;
+ 
+  char buff[2];
+  sprintf(buff, "%d", dispOrientation);
+  const char *cmd[] = {"/usr/bin/rotateScreen.sh", buff, NULL};
+  Arg argout = {.v = cmd};
+  spawn(&argout);
 }
 
 void toggleKb(const Arg *arg) {
