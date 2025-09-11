@@ -120,6 +120,7 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
     {MODKEY | ShiftMask, XK_f, spawn, {.v = firefoxCmd}},
+    {MODKEY | ShiftMask, XK_d, spawn, {.v = nautilusCmd}},
     {MODKEY | ShiftMask, XK_l, spawn, {.v = suspendCmd}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
     {0, XF86XK_AudioMute, spawn, {.v = mutevol}},
