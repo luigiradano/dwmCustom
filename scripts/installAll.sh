@@ -19,36 +19,30 @@ echo "Copying background"
 cp ../backgrounds/bg.jpg /home/luigi/.bg.jpg
 
 echo "Installing required packages"
-
-sudo pacman -S picom redshift touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox ly
+sudo pacman -S mesa xclip picom redshift touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox ly xournalpp
 
 echo "Installing yay"
+rm -rf yay
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
+rm -rf yay
 
 echo "Installing AUR software"
 yay -S dropbox touche ttf-nerd-fonts-symbols
 
 echo "Setting up xinitrc"
+./xinitCfg.sh
 
-cat "#!/bin/sh
-	_JAVA_AWT_WM_NONREPARENTING=1
-	AWT_TOOLKIT=MToolkit
-	export WEBKIT_DISABLE_COMPOSITING_MODE=1
-	redshift -l 45.1333:7.636667 &
-	picom --config /etc/picom.conf &
-	dropbox &
-	feh --bg-scale /home/luigi/.bg.jpg &
-	slstatus &
-	exec dwm" >>/home/luigi/.xinitrc
-
-echo "Detecting sensors"
+echo "Detecting sensors"1
 sensors-detect --auto
 
 echo "Configuring touchpad"
 sudo mkdir -p /etc/X11/xorg.conf.d/
-. trackPadCfg.sh
+sudo ./trackPadCfg.sh
+
+echo "Configuring firefox"
+sudo ./firefoxAppArmor.sh
 
 echo "Installing LazyVim"
-. lazyVimInstall.sh
+.lazyVimInstall.sh
