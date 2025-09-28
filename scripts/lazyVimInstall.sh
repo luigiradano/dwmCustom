@@ -31,4 +31,4 @@ install_lazyvim() {
 
 # Example usage (you can call this function from your script or terminal)
 install_lazyvim
-cp ../data/configs/lua/ "$HOME/.config/nvim/lua/" -r
+cp ../data/configs/nvim "$HOME/.config/nvim/" -r

@@ -68,7 +68,7 @@ static const char *termcmd[] = {"st", NULL};
 static const char *firefoxCmd[] = {"firefox", NULL};
 static const char *keyboardOn[] = {"onboard", NULL};
 static const char *keyboardOff[] = {"", "", NULL};
-static const char *xournalCmd[] = {"xournalpp", NULL};
+static const char *xournalCmd[] = {"/usr/bin/startXpp", NULL};
 static const char *nautilusCmd[] = {"nautilus", NULL};
 
 // static const char *upvol[]   = { "/usr/bin/setVolume.sh", "+5%",     NULL };
@@ -76,7 +76,7 @@ static const char *nautilusCmd[] = {"nautilus", NULL};
 static const char *downvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
 static const char *upvol[] = {"/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *mutevol[] = {"/usr/bin/pactl", "set-sink-mute", "0", "toggle", NULL};
-// static const char *muteMic[] = {"/usr/bin/pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
+//static const char *muteMic[] = {"/usr/bin/pactl", "set-source-mute", "@DEFAULT_SOURCE@", "toggle", NULL};
 static const char *muteMic[] = {"/usr/bin/toggleMicMute.sh", NULL};
 static const char *downbright[] = {"/usr/bin/brightnessctl", "s", "10%-", NULL};
 static const char *upbright[] = {"/usr/bin/brightnessctl", "s", "10%+", NULL};

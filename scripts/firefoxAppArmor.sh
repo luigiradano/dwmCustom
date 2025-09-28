@@ -12,11 +12,16 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo "==> Installing AppArmor and Firefox tools..."
-pacman -Sy apparmor
+if pacman -Q firefox &>/dev/null; then
+  echo "Apparmor installed already"
+else
+  pacman -S apparmor
+fi
 
 echo "==> Enabling AppArmor service..."
+systemctl daemon-reload
 systemctl enable apparmor
-systemctl start apparmor
+systemctl restart apparmor
 
 # Enable AppArmor in kernel parameters (for GRUB or systemd-boot)
 if grep -q '^GRUB_CMDLINE_LINUX=' /etc/default/grub; then
@@ -33,43 +38,102 @@ echo "==> Writing AppArmor profile to: $PROFILE_PATH"
 cat <<'EOF' >"$PROFILE_PATH"
 #include <tunables/global>
 
-profile usr.bin.firefox {
-  # Firefox main binary
+# firefox profile
+profile /usr/lib/firefox/firefox{,*[^s][^h]} {
+  # allow the wrapper script (if /usr/bin/firefox is a shell script that then execs /usr/lib/firefox/firefox)
   /usr/bin/firefox ix,
 
-  # Common read access
-  /usr/** r,
-  /etc/** r,
+  # abstractions to reuse common rules
+  # base files, fonts, sound, X, DBus etc.
+  # these include things like /etc/ssl, /usr/lib, /usr/share etc.
+  # Might have to have abstraction files on your system
+  # For example:
+  #   <abstractions/base>
+  #   <abstractions/x11>
+  #   <abstractions/dbus-strict>
+  #   <abstractions/pulseaudio>
+  #   <abstractions/wayland>  (if you use wayland)
+  #   <abstractions/mesa>     (for GPU / OpenGL / WebRender)
+  # As needed, you include them:
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/xdg-download>
+  #include <abstractions/xdg-documents>
+  #include <abstractions/user-tmp>
 
-  # Write access to profile & cache
+  # Required file reads
+  /usr/lib/firefox/** mr,    # read, map (executable code), etc
+  /usr/lib/*/firefox/** mr,
+  /usr/share/firefox/** r,
+  /usr/share/*/firefox/** r,
+  /etc/fonts/** r,
+  /etc/ssl/** r,
+  /etc/pki/** r,
+  /usr/share/ca-certificates/** r,
+
+  # profile (user data) and cache in home
   owner @{HOME}/.mozilla/** rwk,
+  owner @{HOME}/Downloads/** rw,
   owner @{HOME}/.cache/mozilla/** rwk,
 
-  # Access to dev (e.g. sound)
-  /dev/** rw,
-
-  # Shared memory
+  # GPU / DRM / Mesa etc
+  /dev/dri/* rw,
+  /dev/nvidia* rw,            # if using NVIDIA
   /dev/shm/** rw,
+  /dev/urandom r,
+  /dev/random r,
 
-  # Allow X11 access
-  unix (connect, send, receive) type=stream addr=none peer=unconfined,
+  # sound
+  /dev/snd/** rw,
 
-  # Networking
+  # X11 / Wayland / display server connections
+  unix (bind, connect, send, receive) type=stream addr=unix-abstract peer=(label=unconfined),
+  # Or more restrictive depending on how your setup is
+
+  # Network
   network inet stream,
   network inet6 stream,
+  network udp dgram,           # if needed (e.g. DNS queries)
 
-  # Capabilities
+  # Capabilities (limit these as much as possible)
   capability net_bind_service,
-  capability sys_chroot,
-  capability setuid,
   capability setgid,
+  capability setuid,           # only if needed
 
-  # Deny everything else
+  # DBus access (for media keys, notifications, etc)
+  dbus (send)
+    bus=session
+    interface=org.freedesktop.DBus
+    path=/org/freedesktop/DBus
+    peer=(label=unconfined);
+
+  # MPRIS (media control)
+  dbus (send, receive)
+    bus=session
+    interface=org.freedesktop.DBus.Properties
+    path=/org/mpris/MediaPlayer2
+    peer=(label=unconfined);
+  dbus (bind)
+    bus=session
+    name=org.mpris.MediaPlayer2.firefox;
+
+  # mmap of certain libraries (e.g. DRM / Widevine)
+  owner @{HOME}/.mozilla/**/libwidevinecdm.so mr,
+
+  # Allow read access to GPU device sysfs items (if required)
+  /sys/devices/pci*/**/config r,
+  /sys/devices/pci*/**/revision r,
+  /sys/class/drm/** r,
+
+  # Allow save of shader cache etc (if used)
+  owner @{HOME}/.cache/mesa_shader_cache/** rw,
+
+  # Logging / deny rest
   deny /** wklx,
-
-  # Audit denials
   audit deny /** wklx,
 }
+
 EOF
 
 echo "==> Reloading AppArmor profile..."
