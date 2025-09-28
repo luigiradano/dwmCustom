@@ -1,5 +1,5 @@
 install_lazyvim() {
-  local lazyvim_repo="LazyVim/LazyVim"
+  local lazyvim_repo="LazyVim/starter"
   local lazyvim_dir="$HOME/.config/nvim"
 
   if [[ -d "$lazyvim_dir" ]]; then
@@ -10,11 +10,14 @@ install_lazyvim() {
     fi
     echo "Removing existing LazyVim installation..."
     rm -rf "$lazyvim_dir"
+    rm -rf "$HOME/.local/share/nvim/lazy"
+    sudo rm -rf "/usr/local/share/nvim/lazy"
   fi
 
   echo "Installing LazyVim..."
 
-  git clone --depth 1 "https://github.com/$lazyvim_repo" "$lazyvim_dir"
+  git clone "https://github.com/$lazyvim_repo" "$lazyvim_dir"
+  rm -rf "$lazyvim_dir/.git"
 
   if [[ $? -ne 0 ]]; then
     echo "Error: Failed to clone LazyVim repository."
@@ -28,5 +31,4 @@ install_lazyvim() {
 
 # Example usage (you can call this function from your script or terminal)
 install_lazyvim
-echo "Copying config"
-cp ../configs/* /home/luigi/.config/nvim/ -r
+cp ../data/configs/lua/ "$HOME/.config/nvim/lua/" -r

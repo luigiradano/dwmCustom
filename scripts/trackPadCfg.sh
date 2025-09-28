@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuration settings
-SCROLL_SPEED="1.5"  # Adjust this value for desired speed (e.g., 2.0 for faster, 0.5 for slower)
-REVERSE_SCROLL="false" # Set to "true" to reverse scrolling direction, "false" otherwise
+SCROLL_SPEED="1.1"  # Adjust this value for desired speed (e.g., 2.0 for faster, 0.5 for slower)
+REVERSE_SCROLL="true" # Set to "true" to reverse scrolling direction, "false" otherwise
 
 # Function to modify X11 configuration
 configure_trackpad() {
@@ -20,37 +20,30 @@ configure_trackpad() {
     sudo touch "$config_file"
     sudo chmod 644 "$config_file"
     echo "Creating $config_file"
+  else
+    sudo rm "$config_file" -rf
+
   fi
 
-  # Check if the needed section exists. If not, create it.
-  if ! sudo grep -q "Section \"InputClass\"" "$config_file"; then
      sudo tee -a "$config_file" <<EOF
 Section "InputClass"
         Identifier "libinput touchpad catchall"
         MatchIsTouchpad "on"
-        MatchDevicePath "/dev/input/event*"
         Driver "libinput"
         Option "NaturalScrolling" "$REVERSE_SCROLL"
         Option "ScrollMethod" "twofinger"
         Option "ScrollButton" "3"
+	Option "Tapping" "on"
         Option "ScrollButtonLock" "on"
         Option "AccelSpeed" "$SCROLL_SPEED"
 EndSection
 EOF
-  else
-    #Section exists. Modify existing options, or add new ones.
-    if ! sudo grep -q "Option \"NaturalScrolling\"" "$config_file"; then
-      sudo sed -i '/MatchIsTouchpad "on"/a\        Option "NaturalScrolling" "'"$REVERSE_SCROLL"'"' "$config_file"
-    else
-      sudo sed -i "s/Option \"NaturalScrolling\" \".*\"/Option \"NaturalScrolling\" \"$REVERSE_SCROLL\"/" "$config_file"
-    fi
 
     if ! sudo grep -q "Option \"AccelSpeed\"" "$config_file"; then
       sudo sed -i '/MatchIsTouchpad "on"/a\        Option "AccelSpeed" "'"$SCROLL_SPEED"'"' "$config_file"
     else
       sudo sed -i "s/Option \"AccelSpeed\" \".*\"/Option \"AccelSpeed\" \"$SCROLL_SPEED\"/" "$config_file"
     fi
-  fi
 
   echo "Trackpad configuration updated. You may need to restart your X server or log out/in."
   return 0

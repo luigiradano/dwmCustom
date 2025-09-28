@@ -7,30 +7,30 @@ PROFILE_PATH="/etc/apparmor.d/usr.bin.firefox"
 
 # Ensure root
 if [[ $EUID -ne 0 ]]; then
-    echo "Please run as root (e.g., sudo $0)"
-    exit 1
+  echo "Please run as root (e.g., sudo $0)"
+  exit 1
 fi
 
 echo "==> Installing AppArmor and Firefox tools..."
-pacman -Sy --noconfirm apparmor apparmor-utils firefox
+pacman -Sy apparmor
 
 echo "==> Enabling AppArmor service..."
 systemctl enable apparmor
 systemctl start apparmor
 
 # Enable AppArmor in kernel parameters (for GRUB or systemd-boot)
-if grep -q "GRUB_CMDLINE_LINUX" /etc/default/grub; then
-    echo "==> Configuring GRUB to enable AppArmor..."
-    sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="apparmor=1 security=apparmor /' /etc/default/grub
-    grub-mkconfig -o /boot/grub/grub.cfg
+if grep -q '^GRUB_CMDLINE_LINUX=' /etc/default/grub; then
+  echo "==> Configuring GRUB to enable AppArmor..."
+  sudo sed -i 's|\(^GRUB_CMDLINE_LINUX=".*\)"|\1 apparmor=1 security=apparmor"|' /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 else
-    echo "⚠️ You need to manually add 'apparmor=1 security=apparmor' to your kernel boot parameters."
-    echo "   If you use systemd-boot, edit /boot/loader/entries/*.conf and append to 'options'."
+  echo "⚠️ You need to manually add 'apparmor=1 security=apparmor' to your kernel boot parameters."
+  echo "   If you use systemd-boot, edit /boot/loader/entries/*.conf and append to 'options'."
 fi
 
 echo "==> Writing AppArmor profile to: $PROFILE_PATH"
 
-cat << 'EOF' > "$PROFILE_PATH"
+cat <<'EOF' >"$PROFILE_PATH"
 #include <tunables/global>
 
 profile usr.bin.firefox {
@@ -81,4 +81,3 @@ aa-enforce usr.bin.firefox
 echo "✅ Firefox AppArmor profile configured and enforced."
 
 echo "➡️ Reboot your system to ensure AppArmor is fully active (with kernel boot parameters)."
-

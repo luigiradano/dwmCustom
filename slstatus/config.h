@@ -74,4 +74,4 @@ static const struct arg args[] = {
 	{ cpu_perc, 		"[^b#372021^^c#a20212^ ^c#c5c8c6^ %s^c#c5c8c6^]",		"^c#372021^^r0,0,12,21^^c#a54242^"	},
 	{ run_command,		"[^c#5f819d^ ^c#c5c8c6^ %s]",		"getTemp.sh"},
 	{ datetime, 		"[ %s]",           	"%F %R" },
-};                                                           :
+};                                                          

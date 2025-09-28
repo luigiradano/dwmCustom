@@ -19,7 +19,7 @@ echo "Copying background"
 cp ../backgrounds/bg.jpg /home/luigi/.bg.jpg
 
 echo "Installing required packages"
-sudo pacman -S mesa xclip picom redshift touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox ly xournalpp
+sudo pacman -S mesa xclip picom redshift brightnessctl touchegg feh lm_sensors onboard xf86-input-libinput nautilus firefox ly xournalpp
 
 echo "Installing yay"
 rm -rf yay
@@ -43,6 +43,9 @@ sudo ./trackPadCfg.sh
 
 echo "Configuring firefox"
 sudo ./firefoxAppArmor.sh
+
+echo "Configuring picom"
+sudio ./configPicom.sh
 
 echo "Installing LazyVim"
 .lazyVimInstall.sh
