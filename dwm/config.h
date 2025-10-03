@@ -7,8 +7,8 @@ static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 static const unsigned int gappx = 8;    /* gap pixel between windows */
-static const char *fonts[] = {"monospace:pixelsize=18", "FontAwesome:pixelsize=8"};
-static const char dmenufont[] = "monospace:size=20";
+static const char *fonts[] = {"monospace:pixelsize=24", "FontAwesome:pixelsize=8"};
+static const char dmenufont[] = "monospace:size=28";
 static const char col_gray4[] = "#e9d5d3";
 static const char col_gray3[] = "#c9221e";
 static const char col_gray2[] = "#372021";
